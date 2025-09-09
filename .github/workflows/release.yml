@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "release-*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.24.0
+
+      - name: Set up Android NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r26
+          add-to-path: true
+
+      - name: Install GNU Make
+        run: sudo apt-get update && sudo apt-get install -y make
+
+      - name: Build all Android targets
+        run: make compile
+
+      - name: Extract release title from tag
+        id: tag
+        run: |
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          # Remove 'release-' prefix to get title
+          TITLE=${GITHUB_REF#refs/tags/release-}
+          echo "RELEASE_TITLE=$TITLE" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          name: ${{ env.RELEASE_TITLE }}
+          files: bin/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

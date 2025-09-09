@@ -1,0 +1,159 @@
+package schoolbusschedule
+
+import (
+	"C"
+	error2 "NKNU-Core/schoolbusschedule/error"
+	"NKNU-Core/utils"
+	"encoding/json"
+)
+
+//export LoadSavedData
+func LoadSavedData(toYcData, toHpData *C.char) *C.char {
+	if toYcData == nil || toHpData == nil {
+		return C.CString(utils.FormatBase64Output("", &error2.NoScheduleDataError{
+			Title:   "load data error",
+			Message: "load data error",
+		}))
+	}
+	var toYcSchedule []*schedule
+	err := json.Unmarshal(toYcData, &toYcSchedule)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	var toHpSchedule []*schedule
+	err = json.Unmarshal(toHpData, &toHpSchedule)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	hpToYcSchedule = &toYcSchedule
+	ycToHpSchedule = &toHpSchedule
+	return nil
+}
+
+//export RefreshSchoolBusData
+func RefreshSchoolBusData() *C.char {
+	err := refreshData()
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output("", nil))
+}
+
+//export GetLastSchoolBusDataFetchTime
+func GetLastSchoolBusDataFetchTime() *C.char {
+	if lastDataFetchTime == nil {
+		return C.CString(utils.FormatBase64Output("", &error2.NoScheduleDataError{
+			Title:   "no schedule data",
+			Message: "no schedule data",
+		}))
+	}
+	dataBytes, err := json.Marshal(*lastDataFetchTime)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
+}
+
+//export GetYcToHpSchedule
+func GetYcToHpSchedule() *C.char {
+	if ycToHpSchedule == nil {
+		return C.CString(utils.FormatBase64Output("", &error2.NoScheduleDataError{
+			Title:   "no schedule data",
+			Message: "no schedule data",
+		}))
+	}
+	dataBytes, err := json.Marshal(*ycToHpSchedule)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
+}
+
+//export GetHpToYcSchedule
+func GetHpToYcSchedule() *C.char {
+	if hpToYcSchedule == nil {
+		return C.CString(utils.FormatBase64Output("", &error2.NoScheduleDataError{
+			Title:   "no schedule data",
+			Message: "no schedule data",
+		}))
+	}
+	dataBytes, err := json.Marshal(*hpToYcSchedule)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
+}
+
+//export GetYcNextBusNow
+func GetYcNextBusNow() *C.char {
+	index, sche, err := getNextBusNow(ycToHpSchedule)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	var result map[string]interface{}
+	result["index"] = index
+	result["schedule"] = sche
+	dataBytes, err := json.Marshal(result)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
+}
+
+//export GetHpNextBusNow
+func GetHpNextBusNow() *C.char {
+	index, sche, err := getNextBusNow(hpToYcSchedule)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	var result map[string]interface{}
+	result["index"] = index
+	result["schedule"] = sche
+	dataBytes, err := json.Marshal(result)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
+}
+
+//export GetYcNextBus
+func GetYcNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
+	year := int(rawYear)
+	month := int(rawMonth)
+	day := int(rawDay)
+	hour := int(rawHour)
+	minute := int(rawMinute)
+	index, sche, err := getNextBus(ycToHpSchedule, year, month, day, hour, minute)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	var result map[string]interface{}
+	result["index"] = index
+	result["schedule"] = sche
+	dataBytes, err := json.Marshal(result)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
+}
+
+//export GetHpNextBus
+func GetHpNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
+	year := int(rawYear)
+	month := int(rawMonth)
+	day := int(rawDay)
+	hour := int(rawHour)
+	minute := int(rawMinute)
+	index, sche, err := getNextBus(hpToYcSchedule, year, month, day, hour, minute)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	var result map[string]interface{}
+	result["index"] = index
+	result["schedule"] = sche
+	dataBytes, err := json.Marshal(result)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
+}
