@@ -16,12 +16,12 @@ func LoadSavedData(toYcData, toHpData *C.char) *C.char {
 		}))
 	}
 	var toYcSchedule []*schedule
-	err := json.Unmarshal(toYcData, &toYcSchedule)
+	err := json.Unmarshal([]byte(C.GoString(toYcData)), &toYcSchedule)
 	if err != nil {
 		return C.CString(utils.FormatBase64Output("", err))
 	}
 	var toHpSchedule []*schedule
-	err = json.Unmarshal(toHpData, &toHpSchedule)
+	err = json.Unmarshal([]byte(C.GoString(toHpData)), &toHpSchedule)
 	if err != nil {
 		return C.CString(utils.FormatBase64Output("", err))
 	}
