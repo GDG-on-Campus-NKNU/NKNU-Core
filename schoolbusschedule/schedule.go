@@ -16,10 +16,7 @@ func getNextBusNow(schedules *[]*schedule) (int, *schedule, error) {
 
 func getNextBus(schedules *[]*schedule, year, month, day, hour, minute int) (int, *schedule, error) {
 	if schedules == nil {
-		return 0, nil, &error2.NoScheduleDataError{
-			Title:   "no schedule data",
-			Message: "no schedule data",
-		}
+		return 0, nil, noDataError
 	}
 
 	loc, err := time.LoadLocation("Asia/Taipei")
