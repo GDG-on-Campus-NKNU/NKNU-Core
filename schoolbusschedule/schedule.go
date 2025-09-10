@@ -1,7 +1,6 @@
 package schoolbusschedule
 
 import (
-	error2 "NKNU-Core/schoolbusschedule/error"
 	"time"
 )
 
@@ -37,5 +36,15 @@ func getNextBus(schedules *[]*schedule, year, month, day, hour, minute int) (int
 			}
 		}
 	}
-	return 0, nil, nil
+	return 0, nil, noNextBusError
+}
+
+func getBusByIndex(schedules *[]*schedule, index int) (*schedule, error) {
+	if schedules == nil {
+		return nil, noDataError
+	}
+	if index < 0 || index >= len(*schedules) {
+		return nil, indexOutOfRange
+	}
+	return (*schedules)[index], nil
 }

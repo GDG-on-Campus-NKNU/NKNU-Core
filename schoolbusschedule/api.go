@@ -144,3 +144,31 @@ func GetHpNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
 	}
 	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
 }
+
+//export GetHpBusByIndex
+func GetHpBusByIndex(index C.int) *C.char {
+	index = int(index)
+	sche, err := getBusByIndex(ycToHpSchedule, index)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	dataBytes, err := json.Marshal(sche)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), err))
+}
+
+//export GetYcBusByIndex
+func GetYcBusByIndex(index C.int) *C.char {
+	index = int(index)
+	sche, err := getBusByIndex(ycToHpSchedule, index)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	dataBytes, err := json.Marshal(sche)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), err))
+}
