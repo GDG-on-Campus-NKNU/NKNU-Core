@@ -1,7 +1,6 @@
 package sso
 
 import (
-	error2 "NKNU-Core/sso/error"
 	"strings"
 )
 
@@ -13,10 +12,7 @@ func isSessionValidate(htmlContent string) error {
 		"您尚未輸入帳號",
 	} {
 		if strings.Contains(htmlContent, text) {
-			return &error2.NoLoginError{
-				Title:   text,
-				Message: text,
-			}
+			return noLoginError
 		}
 	}
 	return nil

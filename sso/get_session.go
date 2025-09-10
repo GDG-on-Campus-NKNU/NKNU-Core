@@ -1,7 +1,6 @@
 package sso
 
 import (
-	error2 "NKNU-Core/sso/error"
 	"io"
 	"net/http"
 	"strings"
@@ -28,10 +27,7 @@ func getSessionInfo() (*session, error) {
 	}
 	viewState, exists := doc.Find("#__VIEWSTATE").Attr("value")
 	if viewState == "" || !exists {
-		return nil, &error2.SessionIdNotFoundError{
-			Title:   "View State not found",
-			Message: "View State not found",
-		}
+		return nil, sessionIDNotFoundError
 	}
 	var sessionId string
 	for _, cookie := range res.Cookies() {
@@ -40,10 +36,7 @@ func getSessionInfo() (*session, error) {
 		}
 	}
 	if sessionId == "" {
-		return nil, &error2.SessionIdNotFoundError{
-			Title:   "Session Id not found",
-			Message: "Session Id not found",
-		}
+		return nil, sessionIDNotFoundError
 	}
 	return &session{
 		AspNETSessionId: sessionId,
