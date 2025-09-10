@@ -68,4 +68,45 @@ func TestWorkflow(t *testing.T) {
 			t.Error(index, "Expected", (*toYcTestCase.expectedSchedule.Stations)[0].DepartTime, "got", (*sche.Stations)[0].DepartTime)
 		}
 	}
+
+	for _, toHpTestCase := range []testCase{
+		{
+			year:             2025,
+			month:            9,
+			day:              12,
+			hour:             7,
+			minute:           10,
+			expectedSchedule: (*ycToHpSchedule)[0],
+		},
+		{
+			year:             2025,
+			month:            9,
+			day:              11,
+			hour:             7,
+			minute:           10,
+			expectedSchedule: (*ycToHpSchedule)[1],
+		},
+		{
+			year:             2025,
+			month:            9,
+			day:              13,
+			hour:             7,
+			minute:           10,
+			expectedSchedule: nil,
+		},
+	} {
+		index, sche, err := getNextBus(ycToHpSchedule, toHpTestCase.year, toHpTestCase.month, toHpTestCase.day, toHpTestCase.hour, toHpTestCase.minute)
+		if err != nil {
+			t.Error(index, err)
+		}
+		if sche == nil && toHpTestCase.expectedSchedule != nil {
+			t.Error(index, "no schedule found")
+		}
+		if toHpTestCase.expectedSchedule == nil && sche != nil {
+			t.Error(index, "expected no schedule found")
+		}
+		if sche != toHpTestCase.expectedSchedule {
+			t.Error(index, "Expected", (*toHpTestCase.expectedSchedule.Stations)[0].DepartTime, "got", (*sche.Stations)[0].DepartTime)
+		}
+	}
 }
