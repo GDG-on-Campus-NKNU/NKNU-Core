@@ -8,7 +8,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func getSessionInfo() (*session, error) {
+func GetSessionInfo() (*Session, error) {
 	res, err := http.Get("https://sso.nknu.edu.tw/userLogin/login.aspx?cUrl=/default.aspx")
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func getSessionInfo() (*session, error) {
 	if sessionId == "" {
 		return nil, sessionIDNotFoundError
 	}
-	return &session{
+	return &Session{
 		AspNETSessionId: sessionId,
 		ViewState:       viewState,
 	}, nil

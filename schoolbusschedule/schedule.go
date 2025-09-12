@@ -4,18 +4,18 @@ import (
 	"time"
 )
 
-func getNextBusNow(schedules *[]*schedule) (int, *schedule, error) {
+func GetNextBusNow(schedules *[]*Schedule) (int, *Schedule, error) {
 	tz, err := time.LoadLocation("Asia/Taipei")
 	if err != nil {
 		return 0, nil, err
 	}
 	currentTime := time.Now().In(tz)
-	return getNextBus(schedules, currentTime.Year(), int(currentTime.Month()), currentTime.Day(), currentTime.Hour(), currentTime.Minute())
+	return GetNextBus(schedules, currentTime.Year(), int(currentTime.Month()), currentTime.Day(), currentTime.Hour(), currentTime.Minute())
 }
 
-func getNextBus(schedules *[]*schedule, year, month, day, hour, minute int) (int, *schedule, error) {
+func GetNextBus(schedules *[]*Schedule, year, month, day, hour, minute int) (int, *Schedule, error) {
 	if schedules == nil {
-		return 0, nil, noDataError
+		return 0, nil, NoDataError
 	}
 
 	loc, err := time.LoadLocation("Asia/Taipei")
@@ -39,9 +39,9 @@ func getNextBus(schedules *[]*schedule, year, month, day, hour, minute int) (int
 	return 0, nil, noNextBusError
 }
 
-func getBusByIndex(schedules *[]*schedule, index int) (*schedule, error) {
+func GetBusByIndex(schedules *[]*Schedule, index int) (*Schedule, error) {
 	if schedules == nil {
-		return nil, noDataError
+		return nil, NoDataError
 	}
 	if index < 0 || index >= len(*schedules) {
 		return nil, indexOutOfRange

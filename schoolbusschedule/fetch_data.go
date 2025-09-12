@@ -29,15 +29,15 @@ func fetchRawData(url string) (*[]rawScheduleData, error) {
 	return &data, nil
 }
 
-func fetchData(url string) (*[]*schedule, error) {
+func fetchData(url string) (*[]*Schedule, error) {
 	data, err := fetchRawData(url)
 	if err != nil {
 		return nil, err
 	}
 
-	var schedules []*schedule
+	var schedules []*Schedule
 	for _, scheduleData := range *data {
-		var s schedule
+		var s Schedule
 
 		var stations []station
 		for _, stop := range *scheduleData.Stops {
@@ -91,10 +91,10 @@ func fetchData(url string) (*[]*schedule, error) {
 	return &schedules, nil
 }
 
-func fetchHpToYc() (*[]*schedule, error) {
+func fetchHpToYc() (*[]*Schedule, error) {
 	return fetchData("https://apps.nknu.edu.tw/bus_nosql/toYCJSON")
 }
 
-func fetchYcToHp() (*[]*schedule, error) {
+func fetchYcToHp() (*[]*Schedule, error) {
 	return fetchData("https://apps.nknu.edu.tw/bus_nosql/toHPJSON")
 }

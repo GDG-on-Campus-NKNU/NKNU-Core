@@ -5,12 +5,12 @@ import (
 )
 
 var (
-	lastDataFetchTime *time.Time
-	ycToHpSchedule    *[]*schedule
-	hpToYcSchedule    *[]*schedule
+	LastDataFetchTime *time.Time
+	YcToHpSchedule    *[]*Schedule
+	HpToYcSchedule    *[]*Schedule
 )
 
-func refreshData() error {
+func RefreshData() error {
 	ycToHp, err := fetchYcToHp()
 	if err != nil {
 		return err
@@ -19,9 +19,9 @@ func refreshData() error {
 	if err != nil {
 		return err
 	}
-	ycToHpSchedule = ycToHp
-	hpToYcSchedule = hpToYc
+	YcToHpSchedule = ycToHp
+	HpToYcSchedule = hpToYc
 	newTime := time.Now()
-	lastDataFetchTime = &newTime
+	LastDataFetchTime = &newTime
 	return nil
 }

@@ -5,12 +5,12 @@ import (
 	"strings"
 )
 
-type session struct {
+type Session struct {
 	AspNETSessionId string `json:"aspNETSessionId"`
 	ViewState       string `json:"viewState"`
 }
 
-func login(session *session, account string, password string) error {
+func Login(session *Session, account string, password string) error {
 	loginBody := url.Values{}
 	loginBody.Set("uLoginID", account)
 	loginBody.Set("uPassword", password)

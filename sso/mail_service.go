@@ -12,12 +12,12 @@ type mailServiceAccount struct {
 	Password string `json:"password"`
 }
 
-type getMailServiceAccountResponse struct {
+type GetMailServiceAccountResponse struct {
 	Google *mailServiceAccount `json:"google"`
 	O365   *mailServiceAccount `json:"o365"`
 }
 
-func getMailServiceAccount(sessionID string) (*getMailServiceAccountResponse, error) {
+func GetMailServiceAccount(sessionID string) (*GetMailServiceAccountResponse, error) {
 	googleBodyString, err := newRequest("POST", "https://sso.nknu.edu.tw/Services/GmailandO365.aspx", nil, sessionID, nil)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func getMailServiceAccount(sessionID string) (*getMailServiceAccountResponse, er
 	o365Account := o365Doc.Find("a[id=ctl00_phMain_hlinko365Account]").Text()
 	o365Password := strings.TrimSpace(o365Doc.Find("tr[id=ctl00_phMain_trDefaultPwd2]").Find("td").Text())
 
-	return &getMailServiceAccountResponse{
+	return &GetMailServiceAccountResponse{
 		Google: &mailServiceAccount{
 			Account:  googleAccount,
 			Password: googlePassword,

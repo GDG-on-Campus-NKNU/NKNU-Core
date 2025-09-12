@@ -11,7 +11,7 @@ type station struct {
 	Type       stationType `json:"type"`
 }
 
-type schedule struct {
+type Schedule struct {
 	Stations      *[]station `json:"stations"`
 	IsStudentOnly bool       `json:"isStudentOnly"`
 	OnHoliday     bool       `json:"onHoliday"`
@@ -19,7 +19,7 @@ type schedule struct {
 	DaysOfWeek    uint8      `json:"daysOfWeek"` // Bit flags for days this schedule operates
 }
 
-func (s schedule) MarshalJSON() ([]byte, error) {
+func (s Schedule) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 

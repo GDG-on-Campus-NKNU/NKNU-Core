@@ -19,18 +19,18 @@ func TestMain(m *testing.M) {
 }
 
 func TestWorkflow(t *testing.T) {
-	loginSession, err := getSessionInfo()
+	loginSession, err := GetSessionInfo()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = login(loginSession, account, password)
+	err = Login(loginSession, account, password)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	t.Run("GetMailServiceAccount", func(t *testing.T) {
-		mailService, err := getMailServiceAccount(loginSession.AspNETSessionId)
+		mailService, err := GetMailServiceAccount(loginSession.AspNETSessionId)
 		if err != nil {
 			t.Error(err)
 		}
@@ -43,7 +43,7 @@ func TestWorkflow(t *testing.T) {
 	})
 
 	t.Run("GetHistoryScore", func(t *testing.T) {
-		_, err = getHistoryScore(loginSession)
+		_, err = GetHistoryScore(loginSession)
 		if err != nil {
 			t.Error(err)
 			return

@@ -33,7 +33,7 @@ func getSplitter(s string) string {
 	}
 }
 
-func getHistoryScore(session *session) (*[]*historyScore, error) {
+func GetHistoryScore(session *Session) (*[]*historyScore, error) {
 	bodyString, err := newRequest("GET", "https://sso.nknu.edu.tw/StudentProfile/Day/CourseScoreAll.aspx", nil, session.AspNETSessionId, nil)
 	if err != nil {
 		return nil, err
