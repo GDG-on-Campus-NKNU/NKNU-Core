@@ -1,7 +1,6 @@
 package schoolbusschedule
 
 import (
-	error2 "NKNU-Core/schoolbusschedule/error"
 	"time"
 )
 
@@ -22,8 +21,5 @@ func weekdayFlagConvert(weekday time.Weekday) (uint8, error) {
 		}
 	}
 
-	return 0, &error2.WeekdayConvertError{
-		Title:   "weekday convert error",
-		Message: "weekday convert error",
-	}
+	return 0, flatConvertError
 }

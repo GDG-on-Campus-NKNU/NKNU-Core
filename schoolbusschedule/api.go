@@ -2,7 +2,6 @@ package schoolbusschedule
 
 import (
 	"C"
-	error2 "NKNU-Core/schoolbusschedule/error"
 	"NKNU-Core/utils"
 	"encoding/json"
 )
@@ -10,10 +9,7 @@ import (
 //export LoadSavedData
 func LoadSavedData(toYcData, toHpData *C.char) *C.char {
 	if toYcData == nil || toHpData == nil {
-		return C.CString(utils.FormatBase64Output("", &error2.NoScheduleDataError{
-			Title:   "load data error",
-			Message: "load data error",
-		}))
+		return C.CString(utils.FormatBase64Output("", noDataError))
 	}
 	var toYcSchedule []*schedule
 	err := json.Unmarshal([]byte(C.GoString(toYcData)), &toYcSchedule)
@@ -42,10 +38,7 @@ func RefreshSchoolBusData() *C.char {
 //export GetLastSchoolBusDataFetchTime
 func GetLastSchoolBusDataFetchTime() *C.char {
 	if lastDataFetchTime == nil {
-		return C.CString(utils.FormatBase64Output("", &error2.NoScheduleDataError{
-			Title:   "no schedule data",
-			Message: "no schedule data",
-		}))
+		return C.CString(utils.FormatBase64Output("", noDataError))
 	}
 	dataBytes, err := json.Marshal(*lastDataFetchTime)
 	if err != nil {
@@ -57,10 +50,7 @@ func GetLastSchoolBusDataFetchTime() *C.char {
 //export GetYcToHpSchedule
 func GetYcToHpSchedule() *C.char {
 	if ycToHpSchedule == nil {
-		return C.CString(utils.FormatBase64Output("", &error2.NoScheduleDataError{
-			Title:   "no schedule data",
-			Message: "no schedule data",
-		}))
+		return C.CString(utils.FormatBase64Output("", noDataError))
 	}
 	dataBytes, err := json.Marshal(*ycToHpSchedule)
 	if err != nil {
@@ -72,10 +62,7 @@ func GetYcToHpSchedule() *C.char {
 //export GetHpToYcSchedule
 func GetHpToYcSchedule() *C.char {
 	if hpToYcSchedule == nil {
-		return C.CString(utils.FormatBase64Output("", &error2.NoScheduleDataError{
-			Title:   "no schedule data",
-			Message: "no schedule data",
-		}))
+		return C.CString(utils.FormatBase64Output("", noDataError))
 	}
 	dataBytes, err := json.Marshal(*hpToYcSchedule)
 	if err != nil {
@@ -156,4 +143,32 @@ func GetHpNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
 		return C.CString(utils.FormatBase64Output("", err))
 	}
 	return C.CString(utils.FormatBase64Output(string(dataBytes), nil))
+}
+
+//export GetHpBusByIndex
+func GetHpBusByIndex(index C.int) *C.char {
+	index = int(index)
+	sche, err := getBusByIndex(ycToHpSchedule, index)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	dataBytes, err := json.Marshal(sche)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), err))
+}
+
+//export GetYcBusByIndex
+func GetYcBusByIndex(index C.int) *C.char {
+	index = int(index)
+	sche, err := getBusByIndex(ycToHpSchedule, index)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	dataBytes, err := json.Marshal(sche)
+	if err != nil {
+		return C.CString(utils.FormatBase64Output("", err))
+	}
+	return C.CString(utils.FormatBase64Output(string(dataBytes), err))
 }
