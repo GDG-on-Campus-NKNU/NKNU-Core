@@ -61,8 +61,15 @@ build-android-x86_64:
 	$(SETVAR) CXX=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/x86_64-linux-android21-clang++$(CLANG_SUFFIX)$(SEP) \
 	go build -o ./bin/android_x86_64_nknu_core.so -buildmode=c-shared
 
+build-windows-x86_64:
+	$(SETVAR) GOOS=windows$(SEP) \
+	$(SETVAR) GOARCH=amd64$(SEP) \
+	$(SETVAR) CGO_ENABLED=1$(SEP) \
+	go build -o ./bin/windows_x86_64_nknu_core.so -buildmode=c-shared
+
+
 # Build all targets
-compile: clean create-output-dir build-android-arm64 build-android-arm build-android-x86_64 build-android-x86
+compile: clean create-output-dir build-android-arm64 build-android-arm build-android-x86_64 build-android-x86 build-windows-x86_64
 
 # Test
 test-sso:
