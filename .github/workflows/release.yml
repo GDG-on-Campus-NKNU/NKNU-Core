@@ -29,7 +29,10 @@ jobs:
       - name: Install GNU Make
         run: sudo apt-get update && sudo apt-get install -y make
 
-      - name: Build all Android targets
+      - name: Install mingw-w64
+        run: sudo apt-get update && sudo apt-get install -y mingw-w64
+
+      - name: Build all targets
         run: make compile
 
       - name: Extract release title from tag
