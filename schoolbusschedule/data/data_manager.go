@@ -1,13 +1,15 @@
-package schoolbusschedule
+package data
 
+import "C"
 import (
+	"nknu-core/schoolbusschedule"
 	"time"
 )
 
 var (
 	LastDataFetchTime *time.Time
-	YcToHpSchedule    *[]*Schedule
-	HpToYcSchedule    *[]*Schedule
+	YcToHpSchedule    *[]*schoolbusschedule.Schedule
+	HpToYcSchedule    *[]*schoolbusschedule.Schedule
 )
 
 func RefreshData() error {
@@ -24,4 +26,11 @@ func RefreshData() error {
 	newTime := time.Now()
 	LastDataFetchTime = &newTime
 	return nil
+}
+
+func GetLastSchoolBusDataFetchTime() (*time.Time, error) {
+	if LastDataFetchTime == nil {
+		return nil, schoolbusschedule.NoDataError
+	}
+	return LastDataFetchTime, nil
 }

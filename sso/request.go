@@ -6,12 +6,7 @@ import (
 	"net/http"
 )
 
-type header struct {
-	key string
-	val string
-}
-
-func newRequest(method, url string, body io.Reader, sessionId string, headers *[]header) (string, error) {
+func NewRequest(method, url string, body io.Reader, sessionId string, headers *[]Header) (string, error) {
 	if body == nil {
 		body = bytes.NewReader([]byte{})
 	}
@@ -22,7 +17,7 @@ func newRequest(method, url string, body io.Reader, sessionId string, headers *[
 	req.Header.Set("cookie", "ASP.NET_SessionId="+sessionId)
 	if headers != nil {
 		for _, h := range *headers {
-			req.Header.Set(h.key, h.val)
+			req.Header.Set(h.Key, h.Val)
 		}
 	}
 

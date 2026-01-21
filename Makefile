@@ -66,7 +66,7 @@ build-windows-x86_64:
 	$(SETVAR) GOARCH=amd64$(SEP) \
 	$(SETVAR) CGO_ENABLED=1$(SEP) \
 	$(SETVAR) CC=x86_64-w64-mingw32-gcc$(SEP) \
-	go build -o ./bin/windows_x86_64_nknu_core.dll -buildmode=c-shared
+	go build -o ./bin/windows_x86_64_nknu_core.dll -buildmode=c-shared ./api
 
 
 # Build all targets

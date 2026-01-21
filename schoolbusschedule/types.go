@@ -5,14 +5,14 @@ type departTime struct {
 	Minute int `json:"minute"`
 }
 
-type station struct {
+type Station struct {
 	DepartTime departTime  `json:"departTime"`
 	Name       string      `json:"name"`
 	Type       stationType `json:"type"`
 }
 
 type Schedule struct {
-	Stations      *[]station `json:"stations"`
+	Stations      *[]Station `json:"stations"`
 	IsStudentOnly bool       `json:"isStudentOnly"`
 	OnHoliday     bool       `json:"onHoliday"`
 	VehicleType   string     `json:"vehicleType"`
@@ -21,17 +21,4 @@ type Schedule struct {
 
 func (s Schedule) MarshalJSON() ([]byte, error) {
 	return nil, nil
-}
-
-type rawScheduleData struct {
-	Direction string              `json:"direction"`
-	Stops     *[]rawScheduleStops `json:"stops"`
-	Type      string              `json:"type"`
-	Note      string              `json:"note"`
-}
-
-type rawScheduleStops struct {
-	Name string `json:"name"`
-	Time string `json:"time"`
-	Note string `json:"note"`
 }

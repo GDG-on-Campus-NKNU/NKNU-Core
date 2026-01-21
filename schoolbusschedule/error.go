@@ -5,6 +5,6 @@ import "errors"
 var (
 	flatConvertError = errors.New("FlatConvertError")
 	NoDataError      = errors.New("NoDataError")
-	indexOutOfRange  = errors.New("IndexOutOfRange")
-	noNextBusError   = errors.New("NoNextBusError")
+	IndexOutOfRange  = errors.New("IndexOutOfRange")
+	NoNextBusError   = errors.New("NoNextBusError")
 )

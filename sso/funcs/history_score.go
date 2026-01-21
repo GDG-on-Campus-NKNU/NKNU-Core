@@ -1,6 +1,7 @@
-package sso
+package funcs
 
 import (
+	"nknu-core/sso"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -33,8 +34,8 @@ func getSplitter(s string) string {
 	}
 }
 
-func GetHistoryScore(session *Session) (*[]*historyScore, error) {
-	bodyString, err := newRequest("GET", "https://sso.nknu.edu.tw/StudentProfile/Day/CourseScoreAll.aspx", nil, session.AspNETSessionId, nil)
+func GetHistoryScore(session *sso.Session) (*[]*historyScore, error) {
+	bodyString, err := sso.NewRequest("GET", "https://sso.nknu.edu.tw/StudentProfile/Day/CourseScoreAll.aspx", nil, session.AspNETSessionId, nil)
 	if err != nil {
 		return nil, err
 	}

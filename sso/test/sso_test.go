@@ -1,6 +1,8 @@
-package sso
+package test
 
 import (
+	"nknu-core/sso"
+	"nknu-core/sso/funcs"
 	"os"
 	"strings"
 	"testing"
@@ -19,18 +21,18 @@ func TestMain(m *testing.M) {
 }
 
 func TestWorkflow(t *testing.T) {
-	loginSession, err := GetSessionInfo()
+	loginSession, err := sso.GetSessionInfo()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = Login(loginSession, account, password)
+	err = sso.Login(loginSession, account, password)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	t.Run("GetMailServiceAccount", func(t *testing.T) {
-		mailService, err := GetMailServiceAccount(loginSession.AspNETSessionId)
+		mailService, err := funcs.GetMailServiceAccount(loginSession.AspNETSessionId)
 		if err != nil {
 			t.Error(err)
 		}
@@ -43,7 +45,7 @@ func TestWorkflow(t *testing.T) {
 	})
 
 	t.Run("GetHistoryScore", func(t *testing.T) {
-		_, err = GetHistoryScore(loginSession)
+		_, err = funcs.GetHistoryScore(loginSession)
 		if err != nil {
 			t.Error(err)
 			return

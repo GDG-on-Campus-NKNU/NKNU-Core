@@ -17,8 +17,8 @@ const (
 type stationType string
 
 const (
-	staffBoarding     stationType = "staffBoarding"
-	studentBoarding   stationType = "studentBoarding"
-	boardingIfNotFull stationType = "boardingIfNotFull"
-	alighting         stationType = "alighting"
+	StaffBoarding     stationType = "staffBoarding"
+	StudentBoarding   stationType = "studentBoarding"
+	BoardingIfNotFull stationType = "boardingIfNotFull"
+	Alighting         stationType = "alighting"
 )

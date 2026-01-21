@@ -31,12 +31,12 @@ func GetNextBus(schedules *[]*Schedule, year, month, day, hour, minute int) (int
 		for _, stat := range *sche.Stations {
 			if ((stat.DepartTime.Hour > targetDate.Hour()) || (stat.DepartTime.Hour == targetDate.Hour() && stat.DepartTime.Minute > targetDate.Minute())) &&
 				((targetWeekdayFlag & sche.DaysOfWeek) != 0) &&
-				(stat.Type == studentBoarding || stat.Type == staffBoarding || stat.Type == boardingIfNotFull) {
+				(stat.Type == StudentBoarding || stat.Type == StaffBoarding || stat.Type == BoardingIfNotFull) {
 				return index, sche, nil
 			}
 		}
 	}
-	return 0, nil, noNextBusError
+	return 0, nil, NoNextBusError
 }
 
 func GetBusByIndex(schedules *[]*Schedule, index int) (*Schedule, error) {
@@ -44,7 +44,7 @@ func GetBusByIndex(schedules *[]*Schedule, index int) (*Schedule, error) {
 		return nil, NoDataError
 	}
 	if index < 0 || index >= len(*schedules) {
-		return nil, indexOutOfRange
+		return nil, IndexOutOfRange
 	}
 	return (*schedules)[index], nil
 }

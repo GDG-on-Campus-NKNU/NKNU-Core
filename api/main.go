@@ -1,0 +1,112 @@
+package main
+
+import (
+	"C"
+)
+
+// SSO
+
+//export GetSessionInfo
+func GetSessionInfo() *C.char {
+	return C.CString(GetSessionInfoApi())
+}
+
+//export Login
+func Login(aspNetSessionId *C.char, viewState *C.char, account *C.char, password *C.char) *C.char {
+	aspNetString := C.GoString(aspNetSessionId)
+	viewStateString := C.GoString(viewState)
+	parsedAccount := C.GoString(account)
+	parsedPassword := C.GoString(password)
+	result := LoginApi(aspNetString, viewStateString, parsedAccount, parsedPassword)
+	return C.CString(result)
+}
+
+//export GetHistoryScore
+func GetHistoryScore(aspNetSessionId *C.char, viewState *C.char) *C.char {
+	aspString := C.GoString(aspNetSessionId)
+	viewStateString := C.GoString(viewState)
+	return C.CString(GetHistoryScoreApi(aspString, viewStateString))
+}
+
+//export GetMailServiceAccount
+func GetMailServiceAccount(aspNetSessionId *C.char) *C.char {
+	sessionID := C.GoString(aspNetSessionId)
+	return C.CString(GetMailServiceAccountApi(sessionID))
+}
+
+// school bus schedule
+
+//export LoadSavedData
+func LoadSavedData(toYcData, toHpData *C.char) *C.char {
+	toYcString := C.GoString(toYcData)
+	toHpString := C.GoString(toHpData)
+	return C.CString(LoadSavedDataApi(toYcString, toHpString))
+}
+
+//export RefreshSchoolBusData
+func RefreshSchoolBusData() *C.char {
+	return C.CString(RefreshSchoolBusDataApi())
+}
+
+//export GetLastSchoolBusDataFetchTime
+func GetLastSchoolBusDataFetchTime() *C.char {
+	return C.CString(GetLastSchoolBusDataFetchTimeApi())
+}
+
+//export GetYcToHpSchedule
+func GetYcToHpSchedule() *C.char {
+	return C.CString(GetYcToHpScheduleApi())
+}
+
+//export GetHpToYcSchedule
+func GetHpToYcSchedule() *C.char {
+	return C.CString(GetHpToYcScheduleApi())
+}
+
+//export GetYcNextBusNow
+func GetYcNextBusNow() *C.char {
+	return C.CString(GetYcNextBusNowApi())
+}
+
+//export GetHpNextBusNow
+func GetHpNextBusNow() *C.char {
+	return C.CString(GetHpNextBusNowApi())
+}
+
+//export GetYcNextBus
+func GetYcNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
+	year := int(rawYear)
+	month := int(rawMonth)
+	day := int(rawDay)
+	hour := int(rawHour)
+	minute := int(rawMinute)
+	return C.CString(GetYcNextBusApi(year, month, day, hour, minute))
+}
+
+//export GetHpNextBus
+func GetHpNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
+	year := int(rawYear)
+	month := int(rawMonth)
+	day := int(rawDay)
+	hour := int(rawHour)
+	minute := int(rawMinute)
+	return C.CString(GetHpNextBusApi(year, month, day, hour, minute))
+}
+
+//export GetHpBusByIndex
+func GetHpBusByIndex(index C.int) *C.char {
+	parsedIndex := int(index)
+	return C.CString(GetHpBusByIndexApi(parsedIndex))
+}
+
+//export GetYcBusByIndex
+func GetYcBusByIndex(index C.int) *C.char {
+	parsedIndex := int(index)
+	return C.CString(GetYcBusByIndexApi(parsedIndex))
+}
+
+// main
+
+func main() {
+
+}

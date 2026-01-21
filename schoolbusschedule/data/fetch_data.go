@@ -1,9 +1,10 @@
-package schoolbusschedule
+package data
 
 import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"nknu-core/schoolbusschedule"
 	"strconv"
 	"strings"
 )
@@ -29,29 +30,29 @@ func fetchRawData(url string) (*[]rawScheduleData, error) {
 	return &data, nil
 }
 
-func fetchData(url string) (*[]*Schedule, error) {
+func fetchData(url string) (*[]*schoolbusschedule.Schedule, error) {
 	data, err := fetchRawData(url)
 	if err != nil {
 		return nil, err
 	}
 
-	var schedules []*Schedule
+	var schedules []*schoolbusschedule.Schedule
 	for _, scheduleData := range *data {
-		var s Schedule
+		var s schoolbusschedule.Schedule
 
-		var stations []station
+		var stations []schoolbusschedule.Station
 		for _, stop := range *scheduleData.Stops {
-			var sta station
+			var sta schoolbusschedule.Station
 			sta.Name = stop.Name
 
 			if stop.Note == "教職員工上車" {
-				sta.Type = staffBoarding
+				sta.Type = schoolbusschedule.StaffBoarding
 			} else if stop.Note == "學生上車" {
-				sta.Type = studentBoarding
+				sta.Type = schoolbusschedule.StudentBoarding
 			} else if stop.Note == "上車(客滿不停)" {
-				sta.Type = boardingIfNotFull
+				sta.Type = schoolbusschedule.BoardingIfNotFull
 			} else {
-				sta.Type = alighting
+				sta.Type = schoolbusschedule.Alighting
 			}
 
 			timeSplit := strings.Split(stop.Time, ":")
@@ -69,13 +70,13 @@ func fetchData(url string) (*[]*Schedule, error) {
 
 		// process operates weekdays
 		if strings.Contains(scheduleData.Note, "週一～週四加開") {
-			s.DaysOfWeek = MondayToThursdayFlag
+			s.DaysOfWeek = schoolbusschedule.MondayToThursdayFlag
 		} else if strings.Contains(scheduleData.Note, "每天開車") {
-			s.DaysOfWeek = AllDaysFlag
+			s.DaysOfWeek = schoolbusschedule.AllDaysFlag
 		} else if strings.Contains(scheduleData.Note, "週五行駛") {
-			s.DaysOfWeek = FridayFlag
+			s.DaysOfWeek = schoolbusschedule.FridayFlag
 		} else {
-			s.DaysOfWeek = WeekdayFlag
+			s.DaysOfWeek = schoolbusschedule.WeekdayFlag
 		}
 
 		if strings.Contains(scheduleData.Note, "例假日停駛") {
@@ -91,10 +92,10 @@ func fetchData(url string) (*[]*Schedule, error) {
 	return &schedules, nil
 }
 
-func fetchHpToYc() (*[]*Schedule, error) {
+func fetchHpToYc() (*[]*schoolbusschedule.Schedule, error) {
 	return fetchData("https://apps.nknu.edu.tw/bus_nosql/toYCJSON")
 }
 
-func fetchYcToHp() (*[]*Schedule, error) {
+func fetchYcToHp() (*[]*schoolbusschedule.Schedule, error) {
 	return fetchData("https://apps.nknu.edu.tw/bus_nosql/toHPJSON")
 }

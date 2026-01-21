@@ -1,7 +1,8 @@
-package sso
+package funcs
 
 import (
 	"net/url"
+	"nknu-core/sso"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -18,15 +19,15 @@ type GetMailServiceAccountResponse struct {
 }
 
 func GetMailServiceAccount(sessionID string) (*GetMailServiceAccountResponse, error) {
-	googleBodyString, err := newRequest("POST", "https://sso.nknu.edu.tw/Services/GmailandO365.aspx", nil, sessionID, nil)
+	googleBodyString, err := sso.NewRequest("POST", "https://sso.nknu.edu.tw/Services/GmailandO365.aspx", nil, sessionID, nil)
 	if err != nil {
 		return nil, err
 	}
-	o365ReqHeaders := []header{{"Content-Type", "application/x-www-form-urlencoded"}}
+	o365ReqHeaders := []sso.Header{{"Content-Type", "application/x-www-form-urlencoded"}}
 	o365ReqBody := url.Values{}
 	o365ReqBody.Set("__EVENTARGUMENT", "1")
 	o365ReqBody.Set("__EVENTTARGET", "ctl00$phMain$Menu1")
-	o365BodyString, err := newRequest("POST", "https://sso.nknu.edu.tw/Services/GmailandO365.aspx", strings.NewReader(o365ReqBody.Encode()), sessionID, &o365ReqHeaders)
+	o365BodyString, err := sso.NewRequest("POST", "https://sso.nknu.edu.tw/Services/GmailandO365.aspx", strings.NewReader(o365ReqBody.Encode()), sessionID, &o365ReqHeaders)
 	if err != nil {
 		return nil, err
 	}
