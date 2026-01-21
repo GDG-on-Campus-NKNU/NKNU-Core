@@ -35,7 +35,7 @@ build-android-arm64:
 	$(SETVAR) CGO_ENABLED=1$(SEP) \
 	$(SETVAR) CC=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/aarch64-linux-android21-clang$(CLANG_SUFFIX)$(SEP) \
 	$(SETVAR) CXX=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/aarch64-linux-android21-clang++$(CLANG_SUFFIX)$(SEP) \
-	go build -o ./bin/android_arm64_nknu_core.so -buildmode=c-shared
+	go build -o ./bin/android_arm64_nknu_core.so -buildmode=c-shared ./api
 
 build-android-arm:
 	$(SETVAR) GOOS=android$(SEP) \
@@ -43,7 +43,7 @@ build-android-arm:
 	$(SETVAR) CGO_ENABLED=1$(SEP) \
 	$(SETVAR) CC=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/armv7a-linux-androideabi21-clang$(CLANG_SUFFIX)$(SEP) \
 	$(SETVAR) CXX=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/armv7a-linux-androideabi21-clang++$(CLANG_SUFFIX)$(SEP) \
-	go build -o ./bin/android_arm_nknu_core.so -buildmode=c-shared
+	go build -o ./bin/android_arm_nknu_core.so -buildmode=c-shared ./api
 
 build-android-x86:
 	$(SETVAR) GOOS=android$(SEP) \
@@ -51,7 +51,7 @@ build-android-x86:
 	$(SETVAR) CGO_ENABLED=1$(SEP) \
 	$(SETVAR) CC=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/i686-linux-android21-clang$(CLANG_SUFFIX)$(SEP) \
 	$(SETVAR) CXX=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/i686-linux-android21-clang++$(CLANG_SUFFIX)$(SEP) \
-	go build -o ./bin/android_x86_nknu_core.so -buildmode=c-shared
+	go build -o ./bin/android_x86_nknu_core.so -buildmode=c-shared ./api
 
 build-android-x86_64:
 	$(SETVAR) GOOS=android$(SEP) \
@@ -59,7 +59,7 @@ build-android-x86_64:
 	$(SETVAR) CGO_ENABLED=1$(SEP) \
 	$(SETVAR) CC=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/x86_64-linux-android21-clang$(CLANG_SUFFIX)$(SEP) \
 	$(SETVAR) CXX=$(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/$(HOST_TAG)/bin/x86_64-linux-android21-clang++$(CLANG_SUFFIX)$(SEP) \
-	go build -o ./bin/android_x86_64_nknu_core.so -buildmode=c-shared
+	go build -o ./bin/android_x86_64_nknu_core.so -buildmode=c-shared ./api
 
 build-windows-x86_64:
 	$(SETVAR) GOOS=windows$(SEP) \
