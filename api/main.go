@@ -1,8 +1,18 @@
 package main
 
-import (
-	"C"
-)
+/*
+#include <stdlib.h>
+*/
+import "C"
+import "unsafe"
+
+//export Free
+func Free(p *C.char) {
+	if p == nil {
+		return
+	}
+	C.free(unsafe.Pointer(p))
+}
 
 // SSO
 
