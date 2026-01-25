@@ -70,22 +70,15 @@ func GetHpToYcScheduleApi() string {
 }
 
 func GetYcNextBusNowApi() string {
-	index, sche, err := schoolbusschedule.GetNextBusNow(data.YcToHpSchedule)
-	if err != nil {
-		return utils.FormatBase64Output("", err)
-	}
-	result := make(map[string]interface{})
-	result["index"] = index
-	result["schedule"] = sche
-	dataBytes, err := json.Marshal(result)
-	if err != nil {
-		return utils.FormatBase64Output("", err)
-	}
-	return utils.FormatBase64Output(string(dataBytes), nil)
+	return getNextBusNow(data.YcToHpSchedule)
 }
 
 func GetHpNextBusNowApi() string {
-	index, sche, err := schoolbusschedule.GetNextBusNow(data.HpToYcSchedule)
+	return getNextBusNow(data.HpToYcSchedule)
+}
+
+func getNextBusNow(schedules *[]*schoolbusschedule.Schedule) string {
+	index, sche, err := schoolbusschedule.GetNextBusNow(schedules)
 	if err != nil {
 		return utils.FormatBase64Output("", err)
 	}
