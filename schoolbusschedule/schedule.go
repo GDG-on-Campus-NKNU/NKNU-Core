@@ -2,6 +2,7 @@ package schoolbusschedule
 
 import (
 	"time"
+	_ "time/tzdata"
 )
 
 func GetNextBusNow(schedules *[]*Schedule) (int, *Schedule, error) {
