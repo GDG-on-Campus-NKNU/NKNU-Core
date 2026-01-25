@@ -74,7 +74,7 @@ func GetYcNextBusNowApi() string {
 	if err != nil {
 		return utils.FormatBase64Output("", err)
 	}
-	var result map[string]interface{}
+	result := make(map[string]interface{})
 	result["index"] = index
 	result["schedule"] = sche
 	dataBytes, err := json.Marshal(result)
@@ -89,7 +89,7 @@ func GetHpNextBusNowApi() string {
 	if err != nil {
 		return utils.FormatBase64Output("", err)
 	}
-	var result map[string]interface{}
+	result := make(map[string]interface{})
 	result["index"] = index
 	result["schedule"] = sche
 	dataBytes, err := json.Marshal(result)
@@ -112,7 +112,7 @@ func getNextBusApi(schedule *[]*schoolbusschedule.Schedule, year, month, day, ho
 	if err != nil {
 		return utils.FormatBase64Output("", err)
 	}
-	var result map[string]interface{}
+	result := make(map[string]interface{})
 	result["index"] = index
 	result["schedule"] = sche
 	dataBytes, err := json.Marshal(result)
