@@ -73,46 +73,46 @@ func GetHpToYcSchedule() *C.char {
 	return C.CString(GetHpToYcScheduleApi())
 }
 
-//export GetYcNextBusNow
-func GetYcNextBusNow() *C.char {
-	return C.CString(GetYcNextBusNowApi())
+//export GetYcToHpNextBusNow
+func GetYcToHpNextBusNow() *C.char {
+	return C.CString(GetYcToHpNextBusNowApi())
 }
 
-//export GetHpNextBusNow
-func GetHpNextBusNow() *C.char {
-	return C.CString(GetHpNextBusNowApi())
+//export GetHpToYcNextBusNow
+func GetHpToYcNextBusNow() *C.char {
+	return C.CString(GetHpToYcNextBusNowApi())
 }
 
-//export GetYcNextBus
-func GetYcNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
+//export GetYcToHpNextBus
+func GetYcToHpNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
 	year := int(rawYear)
 	month := int(rawMonth)
 	day := int(rawDay)
 	hour := int(rawHour)
 	minute := int(rawMinute)
-	return C.CString(GetYcNextBusApi(year, month, day, hour, minute))
+	return C.CString(GetYcToHpNextBusApi(year, month, day, hour, minute))
 }
 
-//export GetHpNextBus
-func GetHpNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
+//export GetHpToYcNextBus
+func GetHpToYcNextBus(rawYear, rawMonth, rawDay, rawHour, rawMinute C.int) *C.char {
 	year := int(rawYear)
 	month := int(rawMonth)
 	day := int(rawDay)
 	hour := int(rawHour)
 	minute := int(rawMinute)
-	return C.CString(GetHpNextBusApi(year, month, day, hour, minute))
+	return C.CString(GetHpToYcNextBusApi(year, month, day, hour, minute))
 }
 
-//export GetHpBusByIndex
-func GetHpBusByIndex(index C.int) *C.char {
+//export GetYcToHpBusByIndex
+func GetYcToHpBusByIndex(index C.int) *C.char {
 	parsedIndex := int(index)
-	return C.CString(GetHpBusByIndexApi(parsedIndex))
+	return C.CString(GetYcToHpBusByIndexApi(parsedIndex))
 }
 
-//export GetYcBusByIndex
-func GetYcBusByIndex(index C.int) *C.char {
+//export GetHpToYcBusByIndex
+func GetHpToYcBusByIndex(index C.int) *C.char {
 	parsedIndex := int(index)
-	return C.CString(GetYcBusByIndexApi(parsedIndex))
+	return C.CString(GetHpToYcBusByIndexApi(parsedIndex))
 }
 
 // main

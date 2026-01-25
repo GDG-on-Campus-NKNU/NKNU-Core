@@ -69,11 +69,11 @@ func GetHpToYcScheduleApi() string {
 	return utils.FormatBase64Output(string(dataBytes), nil)
 }
 
-func GetYcNextBusNowApi() string {
+func GetYcToHpNextBusNowApi() string {
 	return getNextBusNow(data.YcToHpSchedule)
 }
 
-func GetHpNextBusNowApi() string {
+func GetHpToYcNextBusNowApi() string {
 	return getNextBusNow(data.HpToYcSchedule)
 }
 
@@ -92,11 +92,11 @@ func getNextBusNow(schedules *[]*schoolbusschedule.Schedule) string {
 	return utils.FormatBase64Output(string(dataBytes), nil)
 }
 
-func GetYcNextBusApi(year, month, day, hour, minute int) string {
+func GetYcToHpNextBusApi(year, month, day, hour, minute int) string {
 	return getNextBusApi(data.YcToHpSchedule, year, month, day, hour, minute)
 }
 
-func GetHpNextBusApi(year, month, day, hour, minute int) string {
+func GetHpToYcNextBusApi(year, month, day, hour, minute int) string {
 	return getNextBusApi(data.HpToYcSchedule, year, month, day, hour, minute)
 }
 
@@ -115,7 +115,7 @@ func getNextBusApi(schedule *[]*schoolbusschedule.Schedule, year, month, day, ho
 	return utils.FormatBase64Output(string(dataBytes), nil)
 }
 
-func GetHpBusByIndexApi(index int) string {
+func GetYcToHpBusByIndexApi(index int) string {
 	sche, err := schoolbusschedule.GetBusByIndex(data.YcToHpSchedule, index)
 	if err != nil {
 		return utils.FormatBase64Output("", err)
@@ -127,8 +127,8 @@ func GetHpBusByIndexApi(index int) string {
 	return utils.FormatBase64Output(string(dataBytes), err)
 }
 
-func GetYcBusByIndexApi(index int) string {
-	sche, err := schoolbusschedule.GetBusByIndex(data.YcToHpSchedule, index)
+func GetHpToYcBusByIndexApi(index int) string {
+	sche, err := schoolbusschedule.GetBusByIndex(data.HpToYcSchedule, index)
 	if err != nil {
 		return utils.FormatBase64Output("", err)
 	}
