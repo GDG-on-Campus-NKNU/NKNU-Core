@@ -1,5 +1,7 @@
 package schoolbusschedule
 
+import "encoding/json"
+
 type departTime struct {
 	Hour   int `json:"hour"`
 	Minute int `json:"minute"`
@@ -20,5 +22,16 @@ type Schedule struct {
 }
 
 func (s Schedule) MarshalJSON() ([]byte, error) {
-	return nil, nil
+	parsedResult := make(map[string]interface{})
+	parsedResult["stations"] = s.Stations
+	parsedResult["isStudentOnly"] = s.IsStudentOnly
+	parsedResult["onHoliday"] = s.OnHoliday
+	parsedResult["vehicleType"] = s.VehicleType
+	parsedResult["daysOfWeek"] = getDayFlagsDescription(s.DaysOfWeek)
+
+	jsonResult, err := json.Marshal(parsedResult)
+	if err != nil {
+		return nil, err
+	}
+	return jsonResult, nil
 }
