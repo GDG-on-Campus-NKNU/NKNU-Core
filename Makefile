@@ -68,9 +68,16 @@ build-windows-x86_64:
 	$(SETVAR) CC=x86_64-w64-mingw32-gcc$(SEP) \
 	go build -o ./bin/windows_x86_64_nknu_core.dll -buildmode=c-shared ./api
 
+build-linux-x86_64:
+	$(SETVAR) GOOS=linux$(SEP) \
+	$(SETVAR) GOARCH=amd64$(SEP) \
+	$(SETVAR) CGO_ENABLED=1$(SEP) \
+	$(SETVAR) CC=x86_64-linux-gnu-gcc$(SEP) \
+	go build -o ./bin/linux_x86_64_nknu_core.so -buildmode=c-shared ./api
+
 
 # Build all targets
-compile: clean create-output-dir build-android-arm64 build-android-arm build-android-x86_64 build-android-x86 build-windows-x86_64
+compile: clean create-output-dir build-android-arm64 build-android-arm build-android-x86_64 build-android-x86 build-windows-x86_64 build-linux-x86_64
 
 # Test
 test-sso:
