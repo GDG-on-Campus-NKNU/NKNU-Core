@@ -115,6 +115,52 @@ func GetHpToYcBusByIndex(index C.int) *C.char {
 	return C.CString(GetHpToYcBusByIndexApi(parsedIndex))
 }
 
+// school news
+
+//export CountNews
+func CountNews() *C.char {
+	return C.CString(CountNewsApi())
+}
+
+//export CountNewsByCategory
+func CountNewsByCategory(category *C.char) *C.char {
+	cat := C.GoString(category)
+	return C.CString(CountNewsByCategoryApi(cat))
+}
+
+//export CountNewsByPublisher
+func CountNewsByPublisher(publisher *C.char) *C.char {
+	pub := C.GoString(publisher)
+	return C.CString(CountNewsByPublisherApi(pub))
+}
+
+//export GetNews
+func GetNews(startIndex, endIndex C.int) *C.char {
+	return C.CString(GetNewsApi(int(startIndex), int(endIndex)))
+}
+
+//export GetNewsByCategory
+func GetNewsByCategory(category *C.char, startIndex, endIndex C.int) *C.char {
+	cat := C.GoString(category)
+	return C.CString(GetNewsByCategoryApi(cat, int(startIndex), int(endIndex)))
+}
+
+//export GetNewsByPublisher
+func GetNewsByPublisher(publisher *C.char, startIndex, endIndex C.int) *C.char {
+	pub := C.GoString(publisher)
+	return C.CString(GetNewsByPublisherApi(pub, int(startIndex), int(endIndex)))
+}
+
+//export ForceRefreshNews
+func ForceRefreshNews() *C.char {
+	return C.CString(ForceRefreshNewsApi())
+}
+
+//export GetLastNewsRefreshTime
+func GetLastNewsRefreshTime() *C.char {
+	return C.CString(GetLastNewsRefreshTimeApi())
+}
+
 // main
 
 func main() {
