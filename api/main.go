@@ -115,6 +115,14 @@ func GetHpToYcBusByIndex(index C.int) *C.char {
 	return C.CString(GetHpToYcBusByIndexApi(parsedIndex))
 }
 
+// classroom
+
+//export QueryClassroom
+func QueryClassroom(input *C.char) *C.char {
+	inputString := C.GoString(input)
+	return C.CString(QueryClassroomApi(inputString))
+}
+
 // main
 
 func main() {
