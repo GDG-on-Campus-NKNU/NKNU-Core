@@ -40,6 +40,7 @@ The project uses a Makefile to automate the compilation process, generating a sh
 
 To compile the library:
 ```bash
+go work init ./api ./schoolbusschedule ./sso ./utils
 make compile
 ```
 
