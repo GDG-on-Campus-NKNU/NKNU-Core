@@ -115,6 +115,53 @@ func GetHpToYcBusByIndex(index C.int) *C.char {
 	return C.CString(GetHpToYcBusByIndexApi(parsedIndex))
 }
 
+// contact
+
+//export GetContactEmergency
+func GetContactEmergency() *C.char {
+	return C.CString(GetContactEmergencyApi())
+}
+
+//export GetContactSecurity
+func GetContactSecurity() *C.char {
+	return C.CString(GetContactSecurityApi())
+}
+
+//export GetContactGuard
+func GetContactGuard() *C.char {
+	return C.CString(GetContactGuardApi())
+}
+
+//export GetContactDorms
+func GetContactDorms() *C.char {
+	return C.CString(GetContactDormsApi())
+}
+
+//export GetContactLife
+func GetContactLife() *C.char {
+	return C.CString(GetContactLifeApi())
+}
+
+//export GetContactCounselor
+func GetContactCounselor() *C.char {
+	return C.CString(GetContactCounselorApi())
+}
+
+//export GetContactHealth
+func GetContactHealth() *C.char {
+	return C.CString(GetContactHealthApi())
+}
+
+//export GetContactIndigenous
+func GetContactIndigenous() *C.char {
+	return C.CString(GetContactIndigenousApi())
+}
+
+//export GetContactAll
+func GetContactAll() *C.char {
+	return C.CString(GetContactAllApi())
+}
+
 // main
 
 func main() {
